@@ -1,4 +1,3 @@
-// src/components/ForecastPage.jsx
 import React, { useState } from 'react';
 import { CiCalendar } from 'react-icons/ci';
 import { motion, AnimatePresence } from 'framer-motion';

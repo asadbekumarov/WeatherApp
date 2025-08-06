@@ -1,125 +1,89 @@
-// src/components/SettingsPage.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { FiCheckCircle } from 'react-icons/fi';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 
 function SettingsPage() {
-    const [saved, setSaved] = useState(false);
-    const { isDarkMode, toggleTheme, defaultCity, setCity } = useTheme();
+    const { isDarkMode, toggleTheme } = useTheme();
     const [selectedTheme, setSelectedTheme] = useState(isDarkMode ? 'dark' : 'light');
-    const [selectedCity, setSelectedCity] = useState(defaultCity);
+    const [defaultCity, setDefaultCity] = useState('');
+    const [saved, setSaved] = useState(false);
+    const cardBg = isDarkMode ? 'bg-gray-800' : 'bg-white';
+    const textColor = isDarkMode ? 'text-white' : 'text-gray-900';
 
     useEffect(() => {
-        setSelectedTheme(isDarkMode ? 'dark' : 'light');
-    }, [isDarkMode]);
+        const storedCity = localStorage.getItem('defaultCity');
+        if (storedCity) {
+            setDefaultCity(storedCity);
+        }
+    }, []);
+
+    useEffect(() => {
+        if ((selectedTheme === 'dark' && !isDarkMode) || (selectedTheme === 'light' && isDarkMode)) {
+            toggleTheme();
+        }
+    }, [selectedTheme]);
 
     const handleSave = () => {
-        toggleTheme();
-        setCity(selectedCity); // Shaharni saqlash
+        localStorage.setItem('defaultCity', defaultCity);
         setSaved(true);
         setTimeout(() => setSaved(false), 2000);
     };
 
     return (
         <motion.section className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
-            <motion.section
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="py-10 px-4 max-w-xl mx-auto min-h-screen"
-            >
+            <section className="py-10 px-4 max-w-xl mx-auto min-h-screen ">
                 <motion.div
-                    layout
-                    className={`p-6 rounded-xl shadow-lg transition-all ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className={`${cardBg} shadow-lg p-6 rounded-2xl`}
                 >
-                    <h2 className={`text-3xl font-bold mb-2 text-center ${isDarkMode ? 'text-blue-400' : 'text-[#0EA5E9]'}`}>
-                        Sozlamalar
-                    </h2>
-                    <p className={`text-center mb-6 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                        Ilova sozlamalarini quyida o'zgartirishingiz mumkin.
-                    </p>
+                    <h2 className="text-2xl font-semibold text-[#0EA5E9] dark:text-white mb-4">Sozlamalar</h2>
 
-                    <div className="space-y-6">
-                        {/* Til tanlash */}
-                        <div>
-                            <label className={`block mb-2 font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Til:</label>
-                            <select
-                                className={`w-full p-2 rounded-md focus:outline-none focus:ring-2 transition ${isDarkMode
-                                    ? 'bg-gray-700 border-gray-600 focus:ring-blue-500 text-white'
-                                    : 'border border-gray-300 focus:ring-[#0EA5E9]'
-                                    }`}
-                            >
-                                <option value="uz">O'zbekcha</option>
-                                <option value="ru">Русский</option>
-                                <option value="en">English</option>
-                            </select>
-                        </div>
-
-                        {/* Tema tanlash */}
-                        <div>
-                            <label className={`block mb-2 font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Tema:</label>
-                            <select
-                                value={selectedTheme}
-                                onChange={(e) => setSelectedTheme(e.target.value)}
-                                className={`w-full p-2 rounded-md focus:outline-none focus:ring-2 transition ${isDarkMode
-                                    ? 'bg-gray-700 border-gray-600 focus:ring-blue-500 text-white'
-                                    : 'border border-gray-300 focus:ring-[#0EA5E9]'
-                                    }`}
-                            >
-                                <option value="light">Yorug'</option>
-                                <option value="dark">Qorong'u</option>
-                            </select>
-                        </div>
-
-                        {/* Default shahar tanlash */}
-                        <div>
-                            <label className={`block mb-2 font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Default Shahar:</label>
-                            <select
-                                value={selectedCity}
-                                onChange={(e) => setSelectedCity(e.target.value)}
-                                className={`w-full p-2 rounded-md focus:outline-none focus:ring-2 transition ${isDarkMode
-                                    ? 'bg-gray-700 border-gray-600 focus:ring-blue-500 text-white'
-                                    : 'border border-gray-300 focus:ring-[#0EA5E9]'
-                                    }`}
-                            >
-                                <option value="Toshkent">Toshkent</option>
-                                <option value="Samarkand">Samarkand</option>
-                                <option value="Bukhara">Bukhara</option>
-                            </select>
-                        </div>
+                    <div className='mb-6 ${cardBg}'>
+                        <label className="block text-gray-700 dark:text-gray-200 mb-2">Mavzu (Theme):</label>
+                        <select
+                            value={selectedTheme}
+                            onChange={(e) => setSelectedTheme(e.target.value)}
+                            className="w-full p-2 rounded-lg border dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+                        >
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
                     </div>
 
-                    {/* Saqlash tugmasi */}
-                    <motion.button
-                        whileTap={{ scale: 0.97 }}
-                        whileHover={{ scale: 1.03 }}
+                    <div className="mb-6">
+                        <label className="block text-gray-700 dark:text-gray-200 mb-2">Default shahar:</label>
+                        <input
+                            type="text"
+                            value={defaultCity}
+                            onChange={(e) => setDefaultCity(e.target.value)}
+                            placeholder="Masalan: Tashkent"
+                            className="w-full p-2 rounded-lg border dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+                        />
+                    </div>
+
+                    <button
                         onClick={handleSave}
-                        className={`mt-8 w-full p-2 rounded-md font-semibold shadow-sm transition ${isDarkMode
-                            ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                            : 'bg-[#0EA5E9] hover:bg-sky-600 text-white'
-                            }`}
+                        className="bg-[#0EA5E9] text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition"
                     >
                         Saqlash
-                    </motion.button>
+                    </button>
 
-                    {/* Saqlanganini bildirish */}
-                    <AnimatePresence>
-                        {saved && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.4 }}
-                                className="mt-4 flex items-center justify-center text-green-500 font-medium"
-                            >
-                                <FiCheckCircle className="mr-2 text-xl" />
-                                Sozlamalar saqlandi!
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                    {saved && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="mt-4 flex items-center text-green-600"
+                        >
+                            <FiCheckCircle className="mr-2" />
+                            Sozlamalar saqlandi!
+                        </motion.div>
+                    )}
                 </motion.div>
-            </motion.section>
+            </section>
         </motion.section>
     );
 }

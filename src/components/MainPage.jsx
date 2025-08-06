@@ -1,4 +1,3 @@
-// src/components/MainPage.jsx
 import React, { useState } from 'react';
 import { getWeather } from '../api/weather';
 import { FaSearchLocation } from 'react-icons/fa';

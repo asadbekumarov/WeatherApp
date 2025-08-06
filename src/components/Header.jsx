@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import React, { useState } from 'react';
 import { CiCloud } from "react-icons/ci";
 import { Link } from 'react-router-dom';
@@ -29,7 +28,6 @@ function Header() {
                     </h1>
                 </div>
 
-                {/* Desktop Nav */}
                 <ul className="hidden md:flex space-x-6 items-center">
                     <li>
                         <Link to="/" className={navLinkClasses}>Home</Link>
@@ -57,7 +55,6 @@ function Header() {
                     </button>
 
 
-                    {/* Mobile Menu Toggle */}
                     <button
                         onClick={() => setMenuOpen(!menuOpen)}
                         className="md:hidden ml-4 text-2xl transition duration-300 hover:scale-110"
@@ -71,7 +68,6 @@ function Header() {
                 </div>
             </div>
 
-            {/* Mobile Nav */}
             <AnimatePresence>
                 {menuOpen && (
                     <motion.ul

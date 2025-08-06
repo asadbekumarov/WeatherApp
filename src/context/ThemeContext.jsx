@@ -1,4 +1,3 @@
-// src/context/ThemeContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext();
@@ -6,7 +5,6 @@ const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
-    // LocalStorage dan theme ni o'qish
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
@@ -14,7 +12,6 @@ export const ThemeProvider = ({ children }) => {
         }
     }, []);
 
-    // Har safar theme o'zgarsa, HTML class va localStorage yangilanadi
     useEffect(() => {
         if (isDarkMode) {
             localStorage.setItem('theme', 'dark');
@@ -25,7 +22,6 @@ export const ThemeProvider = ({ children }) => {
         }
     }, [isDarkMode]);
 
-    // Tema almashtiruvchi va bevosita o'rnatadigan funksiyalar
     const toggleTheme = () => {
         setIsDarkMode(prev => !prev);
     };
