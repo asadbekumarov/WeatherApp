@@ -1,12 +1,64 @@
-# React + Vite
+# Weather Forecast App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bu loyiha ReactJS (Vite) asosida yaratilgan ob-havo prognoz ilovasi bo‘lib, foydalanuvchiga tanlangan shaharning joriy va 5 kunlik ob-havo ma’lumotlarini ko‘rsatadi.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  Ilova funksiyalari
 
-## Expanding the ESLint configuration
+-  Shahar nomi orqali ob-havoni qidirish
+-  5 kunlik prognoz kartalari (kunlik ob-havo)
+-  Light/Dark tema rejimi (`ThemeContext` orqali boshqariladi)
+-  Sozlamalar sahifasi (default shahar, tema tanlash)
+-  Foydalanuvchi sozlamalarini `localStorage`da saqlash
+-  FSD (Feature-Sliced Design) arxitektura
+-  Accessibility (ARIA atributlari, klaviatura navigatsiyasi)
+-  Responsiv dizayn (mobil qurilmalar uchun moslashgan)
+-  `framer-motion` orqali animatsiyalar
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Texnologiyalar
+
+- ReactJS + Vite
+- TailwindCSS
+- React Router DOM
+- Axios
+- OpenWeatherMap API
+- Framer Motion
+- localStorage
+- Custom Theme Context
+
+
+## Ishga tushirish yo‘riqnomasi
+
+1. **Proyektni klonlash**:
+
+```bash
+git clone https://github.com/asadbekumarov/WeatherApp.git
+cd your-repo-name
+Loyihani ishga tushirish uchun kerakli paketlarni o‘rnatish:
+npm install
+.env fayl yaratib, API kalitini yozish:
+VITE_OPENWEATHER_API_KEY=your_api_key_here
+Loyihani ishga tushirish:
+npm run dev
+Papkalar tuzilmasi
+src/
+├── api/                # API funksiyalar
+│   └── weather.js
+├── components/         # UI komponentlar
+│   ├── ForecastPage.jsx
+│   └── MainPage.jsx
+│   └── Header.jsx
+│   └── SettingsPage.jsx
+├── context/            # ThemeContext
+│   └── ThemeContext.jsx
+├── pages/              # Sahifalar
+│   ├── Home.jsx
+│   ├── Forecast.jsx
+│   └── Settings.jsx
+├── App.jsx             # Root komponent
+├── main.jsx            # Entry file
+└── index.css           # TailwindCSS konfiguratsiyasi
+Muallif
+Ism: Asadbek Umarov
+Telegram: @asad_umarov
